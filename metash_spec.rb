@@ -1,14 +1,19 @@
 require File.join( File.dirname(__FILE__), 'lib', 'metash' )
 
 describe Metash do
+
+  it "should respond to base methods and queries" do
+    [:__id__, :__send__].each do |meth|
+      Metash.new.should_not respond_to(meth)
+    end
+
+    [:eql?, :equal?, :frozen?, :instance_of?, :is_a?, :kind_of?, 
+     :nil?, :respond_to?, :tainted?].each do |meth|
+      Metash.new.should respond_to(meth)
+    end
+  end
   
   describe ".new" do
-
-    it "should start from a blank slate" do
-      mh = Metash.new :key => :val
-      mh.should_not respond_to(:anything_but_key)
-      mh.should     respond_to(:key)
-    end
 
     it "should recurse a hash to make every children hashes a metash" do
       mh = Metash.new :key1 => :val1, :key2 => {:subkey => :val2}
@@ -19,15 +24,23 @@ describe Metash do
   end
 
   describe "#inspect" do
-
-    it "should return a nice string" do
-      mh = Metash.new :key => :val
-      mh.inspect.should eql("{key: :val}")
+    
+    before(:all) do
+      @simple  = Metash.new :simple  => "value"
+      @nested  = Metash.new :nested  => { :key  => :value }
+      @complex = Metash.new :complex => { :key1 => :value1, :key2 => :value2 }
     end
 
-    it "should return nested strings" do
-      mh = Metash.new :key => { :nested => :val }
-      mh.inspect.should eql("{key.nested: :val}")
+    it "should return a nice string for simple metashes" do
+      @simple.inspect.should eql('{simple: "value"}') 
+    end
+
+    it "should return a nice string for nested metashes" do
+      @nested.inspect.should eql('{nested: {key: :value}}')
+    end
+
+    it "should return a nice string for complex metashes" do
+      @complex.inspect.should eql('{complex: {key1: :value1, key2: :value2}}')
     end
 
   end

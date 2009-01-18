@@ -3,7 +3,7 @@
 #       hash.foo "bar" => hash[:foo] = "bar"
 class Metash
   instance_methods.each do |meth| 
-    unless meth =~ /^__/
+    unless meth =~ /(^__)|(\?$)/
       undef_method meth
     end
   end
@@ -24,12 +24,21 @@ class Metash
     end
   end
 
-  # Different inspect method to distinguish from Hash
+  # Returns the internal hash, it may be useful
+  def __hash
+    @hash
+  end
+
+  # A Hash-like inspect
   def inspect
+    strs = []
+    @hash.each do |key, val|
+      strs << "%s: %s" % [key, val.inspect]
+    end
+    "{%s}" % strs.join(', ')
   end
 
   private
-
   def recurse(hash)
     hash.each do |key,val|
       hash[key] = val.instance_of?(Hash) ? Metash.new(val) : val
