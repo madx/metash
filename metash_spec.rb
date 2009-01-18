@@ -1,16 +1,21 @@
 require File.join( File.dirname(__FILE__), 'lib', 'metash' )
 
 describe Metash do
-
+  
   it "should respond to base methods and queries" do
+    m = Metash.new
     [:__id__, :__send__].each do |meth|
-      Metash.new.should_not respond_to(meth)
+      m.should respond_to(meth)
     end
 
     [:eql?, :equal?, :frozen?, :instance_of?, :is_a?, :kind_of?, 
      :nil?, :respond_to?, :tainted?].each do |meth|
-      Metash.new.should respond_to(meth)
+      m.should respond_to(meth)
     end
+
+    m.should_not respond_to(:clone)
+    m.should_not respond_to(:hash)
+    m.should_not respond_to(:anything_in_fact)
   end
   
   describe ".new" do
