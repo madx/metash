@@ -8,6 +8,10 @@ using a bit of method_missing magic. This gives a nice interface for Hashes.
 h2. Example
 
 <pre><code>  c = Metash.new :key1 => "value1", :nested => {:key2 => "value2"}
-  c.key1 # => "value1"
-  c.nested.key2 # => "value2"
+  c.key1                        # => "value1"
+  c.nested.key2                 # => "value2"
+  c.nested.key2 "Another value"
+  c.nested.key2                 # => "Another value"
+  c.key3 "value3"               # c.key3 # => "value3"
+  c.key4                        # => nil
 </code></pre>
