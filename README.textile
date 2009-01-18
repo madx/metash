@@ -1,15 +1,13 @@
-h1. CallHash
+h1. Metash
 
-CallHash is a Ruby library that allow what I name "Callable Hashes".
+Metash is a Ruby library that allow what I call "Meta Hashes".
 
-A CallHash is a kind of hash that allows method chaining to get the values
-using a bit of method_missing magic. This gives a nice interface for Hashes
+A Metash is a kind of hash that allows method chaining to get the values
+using a bit of method_missing magic. This gives a nice interface for Hashes.
 
 h2. Example
 
-Use @CallHash.recurse@ to transform every value which is a Hash to a CallHash
-
-<pre><code>  c = CallHash.recurse :key1 => "value1", :nested => {:key2 => "value2"}
+<pre><code>  c = Metash.new :key1 => "value1", :nested => {:key2 => "value2"}
   c.key1 # => "value1"
   c.nested.key2 # => "value2"
 </code></pre>
