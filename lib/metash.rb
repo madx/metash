@@ -3,7 +3,7 @@
 #       hash.foo "bar" => hash[:foo] = "bar"
 class Metash
   instance_methods.each do |meth| 
-    unless meth =~ /(^__)|(\?$)/
+    unless meth =~ /(^__)|(\?$)|^instance_eval$/
       undef_method meth
     end
   end

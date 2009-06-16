@@ -9,7 +9,7 @@ describe Metash do
     end
 
     [:eql?, :equal?, :frozen?, :instance_of?, :is_a?, :kind_of?, 
-     :nil?, :respond_to?, :tainted?].each do |meth|
+     :nil?, :respond_to?, :tainted?, :instance_eval].each do |meth|
       m.should respond_to(meth)
     end
 
